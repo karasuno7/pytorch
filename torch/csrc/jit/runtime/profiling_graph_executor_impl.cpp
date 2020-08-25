@@ -98,14 +98,8 @@ void runNooptPassPipeline(std::shared_ptr<Graph>& graph) {
 void runPreAutodiffPassPipeline(std::shared_ptr<Graph>& graph) {
   GRAPH_DUMP(
       "Before InsertGuards (beginning of runPreAutodiffPassPipeline)", graph);
-  InsertGuards(graph);
-  GRAPH_DUMP("After InsertGuards, before LowerGradOf", graph);
   LowerGradOf(*graph);
-  GRAPH_DUMP("After LowerGradOf, before EliminateRedundantGuards", graph);
-  EliminateRedundantGuards(graph);
-  GRAPH_DUMP("After EliminateRedundantGuards, before InsertBailOuts", graph);
-  InsertBailOuts(graph);
-  GRAPH_DUMP("After InsertBailOuts, before specializeAutogradZero", graph);
+  GRAPH_DUMP("After LowerGradOf, before specializeAutogradZero", graph);
   specializeAutogradZero(*graph);
   GRAPH_DUMP("After specializeAutogradZero", graph);
   // runRequiredPasses
